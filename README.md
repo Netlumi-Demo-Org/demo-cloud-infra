@@ -88,6 +88,12 @@ Notes:
   without a permissions boundary; required-tag rules (`Application`,
   `CostCenter`, ...).
 
+## State
+
+The applied state lives in `s3://acme-ledger-tfstate-<account id>/demo-cloud-infra/terraform.tfstate`
+(us-east-1). Netlumi reads it to map each live resource to the line of Terraform that declares it,
+which is what lets a fix arrive as a pull request against this repository.
+
 ## Apply
 
 Requires Terraform >= 1.10 (S3 native lockfile) and the AWS CLI. Run with
