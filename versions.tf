@@ -8,11 +8,12 @@ terraform {
     }
   }
 
-  # Remote state in the bucket created by ./bootstrap. The bucket name contains
-  # the account id, so it is passed at init time:
+  # Remote state in the bucket created by ./bootstrap (the demo account's).
+  # To apply in another account, override it at init time:
   #   terraform init -backend-config="bucket=acme-ledger-tfstate-<ACCOUNT_ID>"
   # Credentials come from the environment (AWS_PROFILE or the default chain).
   backend "s3" {
+    bucket       = "acme-ledger-tfstate-669958786936"
     key          = "demo-cloud-infra/terraform.tfstate"
     region       = "us-east-1"
     encrypt      = true
