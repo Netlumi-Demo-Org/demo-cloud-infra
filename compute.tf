@@ -207,5 +207,5 @@ resource "aws_lambda_function" "webhook" {
 
 resource "aws_lambda_function_url" "webhook" {
   function_name      = aws_lambda_function.webhook.function_name
-  authorization_type = "NONE"
+  authorization_type = "AWS_IAM"
 }
