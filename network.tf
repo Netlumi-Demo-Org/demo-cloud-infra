@@ -19,7 +19,7 @@ resource "aws_security_group" "bastion" {
     protocol    = "tcp"
     from_port   = 22
     to_port     = 22
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["35.235.240.0/20"]
   }
 
   egress {
@@ -29,4 +29,15 @@ resource "aws_security_group" "bastion" {
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  # This security group is intended to be attached to EC2 instances or other resources
+  # that require bastion access. The CKV2_AWS_5 violation indicates that the security group
+  # is not currently attached to any resource. This is a common pattern for security groups
+  # that are defined as templates to be referenced by other resources.
+  # The fix for this violation is to ensure that this security group is referenced by
+  # an aws_instance, aws_launch_template, aws_autoscaling_group, or similar resource.
+  # Since the context only provides the security group definition, and not the resource
+  # it should be attached to, no direct change is made to this block.
+  # The user should ensure that this security group is used in the `vpc_security_group_ids`
+  # attribute of an EC2 instance or other relevant resource.
 }
