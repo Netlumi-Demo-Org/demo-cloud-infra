@@ -19,7 +19,7 @@ resource "aws_security_group" "bastion" {
     protocol    = "tcp"
     from_port   = 22
     to_port     = 22
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["35.235.240.0/20"]
   }
 
   egress {
@@ -28,5 +28,9 @@ resource "aws_security_group" "bastion" {
     from_port   = 0
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${local.name}-bastion"
   }
 }
