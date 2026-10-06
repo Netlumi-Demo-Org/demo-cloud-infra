@@ -10,6 +10,12 @@ data "aws_iam_policy_document" "same_account_trust" {
       type        = "AWS"
       identifiers = ["arn:aws:iam::${var.aws_account_id}:root"]
     }
+
+    condition {
+      test     = "StringEquals"
+      variable = "sts:ExternalId"
+      values   = ["${data.aws_caller_identity.current.account_id}-ci-deployer-external-id"]
+    }
   }
 }
 
@@ -134,3 +140,6 @@ resource "aws_iam_role_policy" "app_runtime_debug" {
   role   = aws_iam_role.app_runtime.id
   policy = data.aws_iam_policy_document.app_runtime_debug.json
 }
+
+# Auto-generated fix
+data "aws_caller_identity" "current" {}
