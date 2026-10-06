@@ -27,5 +27,6 @@ resource "aws_sqs_queue" "invoice_events" {
 # Expected: netlumi_sns_topics_kms_encryption_at_rest_enabled.
 # Fix PR: kms_master_key_id = "alias/aws/sns" (AWS-managed key, no monthly cost).
 resource "aws_sns_topic" "billing_alerts" {
-  name = "${local.name}-billing-alerts"
+  name              = "${local.name}-billing-alerts"
+  kms_master_key_id = "alias/aws/sns"
 }
