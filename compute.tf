@@ -7,7 +7,7 @@
 #
 # The instance has no key pair and runs no service, and the function returns
 # a fixed response: the exposure is in the configuration only.
-# Cost: a t4g.nano plus its public IPv4 address (a few dollars a month); the
+# Cost: a t4g.micro (free-tier eligible) plus its public IPv4 address; the
 # function costs nothing when idle.
 
 # ---------------------------------------------------------------------------
@@ -113,7 +113,7 @@ resource "aws_iam_instance_profile" "web" {
 
 resource "aws_instance" "web" {
   ami                         = data.aws_ssm_parameter.al2023_arm64.value
-  instance_type               = "t4g.nano"
+  instance_type               = "t4g.micro"
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.web.id]
   iam_instance_profile        = aws_iam_instance_profile.web.name
