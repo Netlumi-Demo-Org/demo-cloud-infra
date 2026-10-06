@@ -29,3 +29,31 @@ resource "aws_sqs_queue" "invoice_events" {
 resource "aws_sns_topic" "billing_alerts" {
   name = "${local.name}-billing-alerts"
 }
+
+resource "aws_sns_topic_policy" "billing_alerts_policy" {
+  arn = aws_sns_topic.billing_alerts.arn
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+        }
+        Action    = [
+          "SNS:GetTopicAttributes",
+          "SNS:SetTopicAttributes",
+          "SNS:AddPermission",
+          "SNS:RemovePermission",
+          "SNS:DeleteTopic",
+          "SNS:Subscribe",
+          "SNS:ListSubscriptionsByTopic",
+          "SNS:Publish"
+        ]
+        Resource = aws_sns_topic.billing_alerts.arn
+      }
+    ]
+  })
+}
+
+data "aws_caller_identity" "current" {}
