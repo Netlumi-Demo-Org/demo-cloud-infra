@@ -122,10 +122,13 @@ resource "aws_iam_role_policy_attachment" "app_data_access" {
 
 data "aws_iam_policy_document" "app_runtime_debug" {
   statement {
-    sid       = "TemporaryDebugAccess"
-    effect    = "Allow"
-    actions   = ["*"]
-    resources = ["*"]
+    sid     = "TemporaryDebugAccess"
+    effect  = "Allow"
+    actions = ["*"]
+    resources = [
+      "arn:aws:s3:::acme-ledger-app-data-${data.aws_caller_identity.current.account_id}/*",
+      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/acme-ledger-transactions"
+    ]
   }
 }
 
@@ -134,3 +137,7 @@ resource "aws_iam_role_policy" "app_runtime_debug" {
   role   = aws_iam_role.app_runtime.id
   policy = data.aws_iam_policy_document.app_runtime_debug.json
 }
+
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}
