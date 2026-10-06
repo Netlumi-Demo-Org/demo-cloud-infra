@@ -37,3 +37,13 @@ output "invoices_table" {
   description = "Name of the invoices table."
   value       = aws_dynamodb_table.invoices.name
 }
+
+output "web_instance_id" {
+  description = "ID of the public web instance."
+  value       = aws_instance.web.id
+}
+
+output "webhook_function_url" {
+  description = "Public URL of the payment webhook function."
+  value       = aws_lambda_function_url.webhook.function_url
+}

@@ -9,3 +9,6 @@ crash.log
 .terraform.tfstate.lock.info
 override.tf
 *_override.tf
+
+# Lambda packages built by archive_file
+.build/
