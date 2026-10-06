@@ -124,8 +124,14 @@ data "aws_iam_policy_document" "app_runtime_debug" {
   statement {
     sid       = "TemporaryDebugAccess"
     effect    = "Allow"
-    actions   = ["*"]
-    resources = ["*"]
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket"
+    ]
+    resources = [
+      "arn:aws:s3:::${local.name}-app-data",
+      "arn:aws:s3:::${local.name}-app-data/*"
+    ]
   }
 }
 
