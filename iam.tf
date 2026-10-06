@@ -121,12 +121,6 @@ resource "aws_iam_role_policy_attachment" "app_data_access" {
 # Fix PR: remove or narrow the wildcard statement.
 
 data "aws_iam_policy_document" "app_runtime_debug" {
-  statement {
-    sid       = "TemporaryDebugAccess"
-    effect    = "Allow"
-    actions   = ["*"]
-    resources = ["*"]
-  }
 }
 
 resource "aws_iam_role_policy" "app_runtime_debug" {
