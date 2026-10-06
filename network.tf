@@ -14,19 +14,15 @@ resource "aws_security_group" "bastion" {
   description = "Acme Ledger bastion access"
   vpc_id      = data.aws_vpc.default.id
 
-  ingress {
-    description = "SSH"
-    protocol    = "tcp"
-    from_port   = 22
-    to_port     = 22
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
     description = "All outbound"
     protocol    = "-1"
     from_port   = 0
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${local.name}-bastion"
   }
 }
