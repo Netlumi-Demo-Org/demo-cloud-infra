@@ -35,19 +35,11 @@ resource "aws_security_group" "web" {
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
-    description = "HTTP"
+    description = "Allow HTTP from internal network"
     protocol    = "tcp"
     from_port   = 80
     to_port     = 80
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "SSH"
-    protocol    = "tcp"
-    from_port   = 22
-    to_port     = 22
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   egress {
@@ -56,6 +48,10 @@ resource "aws_security_group" "web" {
     from_port   = 0
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "acme-ledger-web"
   }
 }
 
